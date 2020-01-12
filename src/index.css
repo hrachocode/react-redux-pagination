@@ -11,3 +11,11 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+table tr th:not(:first-child) span{
+  cursor: pointer;
+}
+
+table tr th:not(:first-child) span:hover{
+  color: #007bff;
+}
