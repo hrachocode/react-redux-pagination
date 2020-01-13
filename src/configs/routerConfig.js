@@ -15,20 +15,20 @@ export const routerConfig = [
             component: Main
       },
       {
-            path: "/react-redux-pagination/add-task",
+            path: "/react-redux-pagination/#/add-task",
             component: AddTask
       },
       {
-            path: "/react-redux-pagination/login",
+            path: "/react-redux-pagination/#/login",
             component: Login,
       },
       {
-            path: "/react-redux-pagination/page/:id",
+            path: "/react-redux-pagination/#/page/:id",
             component: Main
       },
       {
-            path: "/react-redux-pagination/edit/:id",
+            path: "/react-redux-pagination/#/edit/:id",
             exact: true,
-            component: () => <AuthProtection path='/react-redux-pagination/edit/:id'> <EditTask /> </AuthProtection>
+            component: () => <AuthProtection path='/react-redux-pagination/#/edit/:id'> <EditTask /> </AuthProtection>
       },
 ];

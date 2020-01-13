@@ -15,10 +15,10 @@ const Header = () => {
                                     <Link to={'/react-redux-pagination'} className="nav-link" >Main page</Link>
                               </li>
                               <li className="nav-item">
-                                    <Link to={'/react-redux-pagination/add-task'} className="nav-link" >Add task</Link>
+                                    <Link to={'/react-redux-pagination/#/add-task'} className="nav-link" >Add task</Link>
                               </li>
                               {!token ? <li className="nav-item">
-                                    <Link to={'/react-redux-pagination/login'} className="nav-link" >Log in</Link>
+                                    <Link to={'/react-redux-pagination/#/login'} className="nav-link" >Log in</Link>
                               </li> :
                               <li className="nav-item">
                                     <button type="button" className="btn btn-primary" onClick={event => handleLogout(dispatch, history)}>Log out</button>

@@ -76,16 +76,16 @@ export const Pagination = ({ totalTasksCount, currentPage = 1 }) => {
                   <nav aria-label="Page navigation">
                         <ul className="pagination justify-content-end">
                               <li className={`page-item ${currentPage <= 1 ? 'disabled' : ''}`}>
-                                    <Link className="page-link" to={`/page/1`} href="#">First page</Link>
+                                    <Link className="page-link" to={`/react-redux-pagination/#/page/1`} href="#">First page</Link>
                               </li>
                               <li className={`page-item ${currentPage <= 1 ? 'disabled' : ''}`}>
-                                    <Link className="page-link" href="#" tabIndex="-1" to={`/page/${currentPage - 1}`}>Previous</Link>
+                                    <Link className="page-link" href="#" tabIndex="-1" to={`/react-redux-pagination/#/page/${currentPage - 1}`}>Previous</Link>
                               </li>
                               {[...Array(end + 1)].map((elem, key) => {
                                     if (key !== 0 && key >= start && key <= end) {
                                           return (
                                                 <li key={key} className={`page-item ${key === currentPage ? 'disabled' : ''}`}>
-                                                      <Link to={`/page/${key}`} className="page-link">{key}</Link>
+                                                      <Link to={`/react-redux-pagination/#/page/${key}`} className="page-link">{key}</Link>
                                                 </li>
                                           )
                                     } else {
@@ -93,10 +93,10 @@ export const Pagination = ({ totalTasksCount, currentPage = 1 }) => {
                                     }
                               })}
                               <li className={`page-item ${currentPage === totalPages ? 'disabled' : ''}`}>
-                                    <Link className="page-link" to={`/page/${currentPage + 1}`} href="#">Next</Link>
+                                    <Link className="page-link" to={`/react-redux-pagination/#/page/${currentPage + 1}`} href="#">Next</Link>
                               </li>
                               <li className={`page-item ${currentPage === totalPages ? 'disabled' : ''}`}>
-                                    <Link className="page-link" to={`/page/${totalPages}`} href="#">Last page</Link>
+                                    <Link className="page-link" to={`/react-redux-pagination/#/page/${totalPages}`} href="#">Last page</Link>
                               </li>
                         </ul>
                   </nav>
@@ -132,7 +132,7 @@ export const formDataIterator = (form, adminToken) => {
 export const handleTaskAdding = async (event, dispatch) => {
       event.preventDefault();
       const formData = formDataIterator(event.target, null);
-      const response = await getDataFromServer('/react-redux-pagination/create', { method: 'post', body: formData });
+      const response = await getDataFromServer('/create', { method: 'post', body: formData });
       if (response.status === 'ok') {
             dispatch({ type: SET_MESSAGE, message: { successMessage: 'Задача успешно добавлена' } })
       } else dispatch({ type: SET_MESSAGE, message: { errorMessage: response.message.username } })
@@ -151,7 +151,7 @@ export const handleTaskEditing = async (event, id, dispatch, adminToken, state) 
 export const handleAdminLogin = async (event, dispatch, history) => {
       event.preventDefault();
       const formData = formDataIterator(event.target);
-      const response = await getDataFromServer('/react-redux-pagination/login', { method: 'post', body: formData });
+      const response = await getDataFromServer('/login', { method: 'post', body: formData });
       if (response.status === 'ok') {
             dispatch({ type: SET_ADMIN, token: response.message.token })
             history.push('/react-redux-pagination')

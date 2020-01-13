@@ -86,7 +86,7 @@ const Main = ({ match }) => {
                                                                   <div>
                                                                         <Link to={
                                                                               {
-                                                                                    pathname: `/edit/${elem.id}`,
+                                                                                    pathname: `/react-redux-pagination/#/edit/${elem.id}`,
                                                                                     state: { postID: elem.id, status: elem.status, text: elem.text }
                                                                               }
                                                                               } >
