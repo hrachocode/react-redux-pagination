@@ -16,7 +16,7 @@ export const AuthProtection = ({ children, ...rest }) => {
                         ) : (
                                     <Redirect
                                           to={{
-                                                pathname: "/",
+                                                pathname: "/react-redux-pagination",
                                                 state: { from: location }
                                           }}
                                     />
@@ -132,7 +132,7 @@ export const formDataIterator = (form, adminToken) => {
 export const handleTaskAdding = async (event, dispatch) => {
       event.preventDefault();
       const formData = formDataIterator(event.target, null);
-      const response = await getDataFromServer('/create', { method: 'post', body: formData });
+      const response = await getDataFromServer('/react-redux-pagination/create', { method: 'post', body: formData });
       if (response.status === 'ok') {
             dispatch({ type: SET_MESSAGE, message: { successMessage: 'Задача успешно добавлена' } })
       } else dispatch({ type: SET_MESSAGE, message: { errorMessage: response.message.username } })
@@ -151,10 +151,10 @@ export const handleTaskEditing = async (event, id, dispatch, adminToken, state) 
 export const handleAdminLogin = async (event, dispatch, history) => {
       event.preventDefault();
       const formData = formDataIterator(event.target);
-      const response = await getDataFromServer('/login', { method: 'post', body: formData });
+      const response = await getDataFromServer('/react-redux-pagination/login', { method: 'post', body: formData });
       if (response.status === 'ok') {
             dispatch({ type: SET_ADMIN, token: response.message.token })
-            history.push('/')
+            history.push('/react-redux-pagination')
       } else {
             dispatch({ type: SET_MESSAGE, message: { errorMessage: response.message.password } })
       }

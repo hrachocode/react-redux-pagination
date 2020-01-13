@@ -14,7 +14,7 @@ const EditTask = () => {
 
       useEffect(() => {
             const isAdminLogged = JSON.parse(localStorage.getItem('persist:root')).adminToken
-            isAdminLogged === 'null' && dispatch({ type: SET_ADMIN, token: null }) && history.push('/')
+            isAdminLogged === 'null' && dispatch({ type: SET_ADMIN, token: null }) && history.push('/react-redux-pagination')
       },[adminToken, history, dispatch])
 
       return (

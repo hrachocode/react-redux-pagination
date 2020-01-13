@@ -10,25 +10,25 @@ import { AuthProtection } from '../utils/index'
 // way you'd do inside a `<Switch>`.
 export const routerConfig = [
       {
-            path: "/",
+            path: "/react-redux-pagination",
             exact: true,
             component: Main
       },
       {
-            path: "/add-task",
+            path: "/react-redux-pagination/add-task",
             component: AddTask
       },
       {
-            path: "/login",
+            path: "/react-redux-pagination/login",
             component: Login,
       },
       {
-            path: "/page/:id",
+            path: "/react-redux-pagination/page/:id",
             component: Main
       },
       {
-            path: "/edit/:id",
+            path: "/react-redux-pagination/edit/:id",
             exact: true,
-            component: () => <AuthProtection path='/edit/:id'> <EditTask /> </AuthProtection>
+            component: () => <AuthProtection path='/react-redux-pagination/edit/:id'> <EditTask /> </AuthProtection>
       },
 ];
