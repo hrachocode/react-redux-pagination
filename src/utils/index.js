@@ -76,16 +76,16 @@ export const Pagination = ({ totalTasksCount, currentPage = 1 }) => {
                   <nav aria-label="Page navigation">
                         <ul className="pagination justify-content-end">
                               <li className={`page-item ${currentPage <= 1 ? 'disabled' : ''}`}>
-                                    <Link className="page-link" to={`/react-redux-pagination/#/page/1`} href="#">First page</Link>
+                                    <Link className="page-link" to={`/react-redux-pagination/page/1`} href="#">First page</Link>
                               </li>
                               <li className={`page-item ${currentPage <= 1 ? 'disabled' : ''}`}>
-                                    <Link className="page-link" href="#" tabIndex="-1" to={`/react-redux-pagination/#/page/${currentPage - 1}`}>Previous</Link>
+                                    <Link className="page-link" href="#" tabIndex="-1" to={`/react-redux-pagination/page/${currentPage - 1}`}>Previous</Link>
                               </li>
                               {[...Array(end + 1)].map((elem, key) => {
                                     if (key !== 0 && key >= start && key <= end) {
                                           return (
                                                 <li key={key} className={`page-item ${key === currentPage ? 'disabled' : ''}`}>
-                                                      <Link to={`/react-redux-pagination/#/page/${key}`} className="page-link">{key}</Link>
+                                                      <Link to={`/react-redux-pagination/page/${key}`} className="page-link">{key}</Link>
                                                 </li>
                                           )
                                     } else {
@@ -93,10 +93,10 @@ export const Pagination = ({ totalTasksCount, currentPage = 1 }) => {
                                     }
                               })}
                               <li className={`page-item ${currentPage === totalPages ? 'disabled' : ''}`}>
-                                    <Link className="page-link" to={`/react-redux-pagination/#/page/${currentPage + 1}`} href="#">Next</Link>
+                                    <Link className="page-link" to={`/react-redux-pagination/page/${currentPage + 1}`} href="#">Next</Link>
                               </li>
                               <li className={`page-item ${currentPage === totalPages ? 'disabled' : ''}`}>
-                                    <Link className="page-link" to={`/react-redux-pagination/#/page/${totalPages}`} href="#">Last page</Link>
+                                    <Link className="page-link" to={`/react-redux-pagination/page/${totalPages}`} href="#">Last page</Link>
                               </li>
                         </ul>
                   </nav>
