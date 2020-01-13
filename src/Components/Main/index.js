@@ -1,78 +1,105 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useParams } from 'react-router-dom';
-import { getDataFromServer, Loading, Pagination } from '../../utils';
-import { ADD_TASK, SET_LOADING } from '../../store/actionTypes';
+import { Link } from 'react-router-dom';
+import { getDataFromServer, Loading, Pagination, handleSort } from '../../utils';
+import { GET_TASK, SET_LOADING } from '../../store/actionTypes';
 
-const handleSort = async (value, id, dispatch) => {
-      dispatch({ type: SET_LOADING })
+import desc from './assets/img/sort_desc.png';
+import asc from './assets/img/sort_asc.png';
+import editIcon from './assets/img/edit-icon.png'
 
-      const sortParams = {
-            sort_field: value,
-            page: id,
-            sort_direction: 'asc'
-      }
+const Main = ({ match }) => {
 
-      const response = await getDataFromServer('', {}, sortParams)
-      if (response.status === 'ok') {
-            dispatch({ type: ADD_TASK, task: response.message })
-            dispatch({ type: SET_LOADING })
-      }
-}
-
-const Main = () => {
-      let { id } = useParams();
       const dispatch = useDispatch();
-      const data = useSelector(state => state.tasks.totalTasks)
-      const dataLength = useSelector(state => state.tasks.totalTasksCount)
-      const loading = useSelector(state => state.loading)
+      const tasks = useSelector(state => state.tasks);
+      const loading = useSelector(state => state.loading);
+      const currentSort = useSelector(state => state.currentSort)
+      const editedTasks = useSelector(state => state.editedTask)
+      const adminToken = useSelector(state => state.adminToken)
+
       useEffect(() => {
             const getTasks = async () => {
                   dispatch({ type: SET_LOADING })
-                  const response = await getDataFromServer('', {}, { sort_direction: 'desc', page: id });
+
+                  const response = await getDataFromServer('', {}, { ...currentSort, page: typeof match.params.id !== 'undefined' ? match.params.id : 1 });
                   if (response.status === 'ok') {
-                        dispatch({ type: ADD_TASK, task: response.message })
+                        dispatch({ type: GET_TASK, task: response.message })
                         dispatch({ type: SET_LOADING })
+                        if (currentSort) {
+                              document.querySelector(`span[data-value='${currentSort.sort_field}']`)
+                                    .style.backgroundImage = currentSort.sort_direction === 'asc' ? `url(${desc}` : `url(${asc}`
+                        }
                   }
             }
             getTasks()
-      }, [dispatch, id])
+      }, [dispatch, match.params.id, currentSort])
 
       return (
             <div>
                   {!loading ?
                         <div>
-                              <table className="table table-striped  table-dark mt-5">
+                              <table className="table table-striped text-center table-dark mt-5">
                                     <thead>
                                           <tr>
-                                                <th scope="col" data-value='id' >
-                                                     <span>ID</span> 
+                                                <th scope="col">
+                                                      <span
+                                                            data-value='username'
+                                                            onClick={event => handleSort(event, dispatch, currentSort)}
+                                                      >
+                                                            Username
+                                                      </span>
                                                 </th>
-                                                <th scope="col" data-value='username'  >
-                                                      <span onClick={event => handleSort(event.target.dataset.value, id, dispatch)}>Username</span>
+                                                <th scope="col">
+                                                      <span
+                                                            data-value='email'
+                                                            onClick={event => handleSort(event, dispatch, currentSort)}
+                                                      >
+                                                            Email
+                                                            </span>
                                                 </th>
-                                                <th scope="col" data-value='email'  >
-                                                      <span onClick={event => handleSort(event.target.dataset.value, id, dispatch)}>Email</span>
+                                                <th>
+                                                      <span> Text </span>
                                                 </th>
-                                                <th scope="col" data-value='status'  >
-                                                      <span onClick={event => handleSort(event.target.dataset.value, id, dispatch)}>Status</span>
+                                                <th scope="col">
+                                                      <span
+                                                            data-value='status'
+                                                            onClick={event => handleSort(event, dispatch, currentSort)}
+                                                      >
+                                                            Status
+                                                            </span>
                                                 </th>
+                                                {adminToken && <th>Edit</th>}
                                           </tr>
                                     </thead>
                                     <tbody>
-                                          {data && data.map((elem, key) => {
+                                          {tasks.totalTasks && tasks.totalTasks.map((elem, key) => {
                                                 return (
                                                       <tr key={key}>
-                                                            <td>{elem.id}</td>
                                                             <td>{elem.username}</td>
                                                             <td>{elem.email}</td>
-                                                            <td>{elem.status}</td>
+                                                            <td>{elem.text}</td>
+                                                            <td>
+                                                                  {elem.status === 10 ? 'Выполнено' : 'Не Выполнено'}
+                                                                  {editedTasks.includes(elem.id) && ' | Отредактировано Админом'}
+                                                            </td>
+                                                            {adminToken && <td> 
+                                                                  <div>
+                                                                        <Link to={
+                                                                              {
+                                                                                    pathname: `/edit/${elem.id}`,
+                                                                                    state: { postID: elem.id, status: elem.status, text: elem.text }
+                                                                              }
+                                                                              } >
+                                                                              <img src={editIcon} alt='edit icon' />
+                                                                        </Link>
+                                                                  </div>                                          
+                                                            </td>}
                                                       </tr>
                                                 )
                                           })}
                                     </tbody>
                               </table>
-                              <Pagination totalTasksCount={dataLength} currentPage={id} />
+                              <Pagination totalTasksCount={tasks.totalTasksCount} currentPage={match.params.id} />
                         </div>
                         : <Loading />}
             </div>

@@ -1,20 +1,29 @@
 import React from 'react';
+import { handleAdminLogin } from '../../utils';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
 const Login = () => {
+      const dispatch = useDispatch();
+      const message = useSelector(state => state.setMessage);
+      const history = useHistory();
       return (
             <div>
-                  <form>
+                  <form onSubmit={event => handleAdminLogin(event, dispatch, history)}>
                         <div className="form-group">
-                              <label htmlFor="exampleInputUsername1">Username</label>
-                              <input type="text" pattern='/^[A-Za-z0-9]+(?:[ _-][A-Za-z0-9]+)*$/' className="form-control" id="exampleInputUsername1" required />
+                              <label htmlFor="username">Username</label>
+                              <input type="text" className="form-control" id="username" required />
                         </div>
                         <div className="form-group">
-                              <label htmlFor="exampleInputPassword1">Password</label>
-                              <input type="text" className="form-control" id="exampleInputPassword1" required />
+                              <label htmlFor="password">Password</label>
+                              <input type="password" className="form-control" id="password" required />
                         </div>
 
                         <button type="submit" className="btn btn-primary">Submit</button>
                   </form>
+                  {message && <div className={`mt-2 alert alert-${ message.errorMessage ? 'warning' : 'success'}`} role="alert">
+                        {message.errorMessage}
+                  </div>}
             </div>
       );
 }

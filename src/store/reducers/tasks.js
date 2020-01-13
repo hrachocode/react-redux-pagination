@@ -5,12 +5,16 @@ const initialState = {
             totalTasks: [],
             totalTasksCount: 0
       },
-      loading: false
+      loading: false,
+      currentSort: null,
+      adminToken: null,
+      setMessage: null,
+      editedTask: []
 }
 
 const tasksReducer = (state = initialState, action) => {
       switch (action.type) {
-            case actionTypes.ADD_TASK:
+            case actionTypes.GET_TASK:
                   return  {
                         ...state,
                         tasks: {
@@ -23,6 +27,30 @@ const tasksReducer = (state = initialState, action) => {
                   return {
                         ...state,
                         loading: !state.loading
+                  }
+            case actionTypes.SET_SORT:
+                  return {
+                        ...state,
+                        currentSort: action.sort 
+                  }
+            case actionTypes.SET_ADMIN:
+                  return {
+                        ...state,
+                        adminToken: action.token
+                  }
+            case actionTypes.SET_EDITED_TASK:
+                  return {
+                        ...state,
+                        editedTask: [ ...state.editedTask, action.taskID ]
+                  }
+            case actionTypes.SET_MESSAGE:
+                  return {
+                        ...state,
+                        setMessage: {
+                              ...state.setMessage,
+                              errorMessage: action.message.errorMessage,
+                              successMessage: action.message.successMessage
+                        }
                   }
             default:
                   return state

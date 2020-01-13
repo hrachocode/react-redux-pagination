@@ -12,10 +12,25 @@ code {
     monospace;
 }
 
-table tr th:not(:first-child) span{
+table tr th:not(:nth-child(3)) span{
   cursor: pointer;
 }
 
-table tr th:not(:first-child) span:hover{
+table tr th:not(:nth-child(3)) span{
+  background-repeat: no-repeat;
+  background-position: 100%;
+  padding-right: 20px;
+}
+
+table tr th:not(:nth-child(3)) span:hover{
   color: #007bff;
+}
+
+table tr img {
+  width: 25%;
+  cursor: pointer;
+}
+
+.admin-edited{
+  font-size: 11px;
 }
